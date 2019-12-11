@@ -8,13 +8,25 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import HelloWorld from "./components/HelloWorld.vue";
-
+import { MainModule } from "@/store/modules/main";
 @Component({
   components: {
     HelloWorld
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  get count() {
+    return MainModule.count;
+  }
+
+  async mounted() {
+    await MainModule.increment(5);
+    console.log("TCL: App -> mounted -> count", this.count);
+
+    await MainModule.decrement(2);
+    console.log("TCL: App -> mounted -> count", this.count);
+  }
+}
 </script>
 
 <style lang="scss">
